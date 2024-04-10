@@ -3,11 +3,13 @@ using System.ComponentModel;
 using System.Net;
 using System.Text;
 
+using static zClip_Desktop.Constants.Commons;
+
 namespace zClip_Desktop
 {
     public class HttpServer
     {
-        Uri baseUrl = new Uri("http://192.168.0.14:8080/");
+        Uri baseUrl = new Uri(BaseUrl);
 
         // Create a new HttpListener instance
         HttpListener listener = new HttpListener();
