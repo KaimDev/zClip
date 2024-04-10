@@ -1,4 +1,8 @@
-﻿namespace zClip_Desktop
+﻿using System;
+using System.Windows;
+using zClip_Desktop.Constants;
+
+namespace zClip_Desktop
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -9,6 +13,8 @@
         {
             InitializeComponent();
             HttpServer httpServer = new HttpServer();
+
+            IpName.Text = Commons.BaseUrl;
         }
     }
 }
