@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:zClip_Desktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        ResizeMode="NoResize"
+        Background="#FF2D2D30"
+        Title="zClip" Height="550" Width="350">
     <Grid>
         
     </Grid>

@@ -8,6 +8,7 @@
         public MainWindow()
         {
             InitializeComponent();
+            HttpServer httpServer = new HttpServer();
         }
     }
 }
