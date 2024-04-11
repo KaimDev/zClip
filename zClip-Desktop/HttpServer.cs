@@ -3,21 +3,21 @@ using System.ComponentModel;
 using System.Net;
 using System.Text;
 
-using static zClip_Desktop.Constants.Commons;
-
 namespace zClip_Desktop
 {
     public class HttpServer
     {
-        Uri baseUrl = new Uri(BaseUrl);
+        private Uri baseUrl;
 
         // Create a new HttpListener instance
         HttpListener listener = new HttpListener();
         
         BackgroundWorker worker = new BackgroundWorker();
 
-        public HttpServer()
+        public HttpServer(string OwnIpAddress)
         {
+            baseUrl = new Uri("http://" + OwnIpAddress + ":" + 1705);
+            
             worker.DoWork += worker_DoWork;
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
             worker.RunWorkerAsync();
