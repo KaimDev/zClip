@@ -12,7 +12,7 @@ namespace zClip_Desktop.Extensions
             var IPHost = Dns.GetHostEntry(Dns.GetHostName());
 
             string IpAddress = (from ipAddres in IPHost.AddressList
-                where ipAddres.ToString().StartsWith("192")
+                where ipAddres.ToString().StartsWith("192.168")
                 select ipAddres).First().ToString();
             
             container.RegisterInstance(new OwnIpAddress { IpAddress = IpAddress.ToString() });
