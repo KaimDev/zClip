@@ -10,19 +10,27 @@ namespace zClip_Desktop
     {
         private HttpServer _httpServer;
         private ServiceCollections _serviceCollections;
+
+        private string _ipAddress;
         
         public MainWindow()
         {
             InitializeComponent();
             InitializeServices();
+            ConfigureComponents();
         }
 
         public void InitializeServices()
         {
             _serviceCollections = ServiceCollections.GetInstance();
             
-            var ipAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>().IpAddress;
-            _httpServer = new HttpServer(ipAddress);
+            _ipAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>().IpAddress;
+            _httpServer = new HttpServer(_ipAddress);
+        }
+
+        public void ConfigureComponents()
+        {
+            TB_IpName.Text = _ipAddress;
         }
     }
 }

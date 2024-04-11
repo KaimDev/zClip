@@ -13,7 +13,7 @@
         <TextBlock Text="zClip" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10" />
         
         <TextBlock Text="Your Ip" HorizontalAlignment="Center" Margin="10"/>
-        <TextBlock x:Name="IpName" Text="IpAddress" Foreground="Cyan" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="TB_IpName" Text="IpAddress" Foreground="Cyan" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
         
         <TextBlock Text="Disconnected" Foreground="Red" FontWeight="Bold" TextAlignment="Center" FontSize="20" Margin="20"/>
         
