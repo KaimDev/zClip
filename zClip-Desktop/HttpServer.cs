@@ -17,7 +17,10 @@ namespace zClip_Desktop
         public HttpServer(string OwnIpAddress)
         {
             baseUrl = new Uri("http://" + OwnIpAddress + ":" + 1705);
-            
+        }
+        
+        public void Start()
+        {
             worker.DoWork += worker_DoWork;
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
             worker.RunWorkerAsync();

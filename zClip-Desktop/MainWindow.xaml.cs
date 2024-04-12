@@ -18,7 +18,7 @@ namespace zClip_Desktop
             InitializeComponent();
             InitializeServices();
             ConfigureComponents();
-        }
+            }
 
         public void InitializeServices()
         {
@@ -26,6 +26,7 @@ namespace zClip_Desktop
             
             _ipAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>().IpAddress;
             _httpServer = new HttpServer(_ipAddress);
+            _httpServer.Start();
         }
 
         public void ConfigureComponents()
