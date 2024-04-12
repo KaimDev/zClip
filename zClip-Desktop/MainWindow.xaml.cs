@@ -22,11 +22,13 @@ namespace zClip_Desktop
 
         public void InitializeServices()
         {
+            // Get the service collections
             _serviceCollections = ServiceCollections.GetInstance();
-            
-            _ipAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>().IpAddress;
-            _httpServer = new HttpServer(_ipAddress);
-            _httpServer.Start();
+            var container = _serviceCollections.GetContainer();
+
+            // Configure and start the server
+            _ipAddress = container.Resolve<OwnIpAddress>().IpAddress;
+            container.ConfigureHttpServer(_ipAddress);
         }
 
         public void ConfigureComponents()
