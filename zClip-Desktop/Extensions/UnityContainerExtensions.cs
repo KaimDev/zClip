@@ -2,6 +2,7 @@
 using Unity;
 using zClip_Desktop.Helpers;
 using System.Linq;
+using zClip_Desktop.Inferfaces;
 
 namespace zClip_Desktop.Extensions
 {
@@ -14,7 +15,7 @@ namespace zClip_Desktop.Extensions
             string IpAddress = (from ipAddres in IPHost.AddressList
                 where ipAddres.ToString().StartsWith("192.168")
                 select ipAddres).First().ToString();
-            
+
             container.RegisterInstance(new OwnIpAddress { IpAddress = IpAddress.ToString() });
         }
 
@@ -26,6 +27,11 @@ namespace zClip_Desktop.Extensions
         public static void ConfigureHttpServer(this IUnityContainer container, string ipAddress)
         {
             container.RegisterInstance(new HttpServer(ipAddress));
+        }
+
+        public static void ConfigureClipboardService(this IUnityContainer container)
+        {
+            container.RegisterSingleton(typeof(IClipboardService), typeof(ClipboardService));
         }
     }
 }

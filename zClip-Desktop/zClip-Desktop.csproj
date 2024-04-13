@@ -63,8 +63,10 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
+        <Compile Include="ClipboardService.cs" />
         <Compile Include="Extensions\UnityContainerExtensions.cs" />
         <Compile Include="Helpers\OwnIpAddress.cs" />
+        <Compile Include="Inferfaces\IClipboardService.cs" />
         <Compile Include="ServiceCollections.cs" />
         <Compile Include="SyncService.cs" />
         <Page Include="MainWindow.xaml">
