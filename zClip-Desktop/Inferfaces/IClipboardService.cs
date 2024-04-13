@@ -7,5 +7,6 @@ namespace zClip_Desktop.Inferfaces
         event EventHandler<ClipboardService.ClipboardEventArgs> OnClipboardChanged;
         void Start();
         void Stop();
+        void Clear();
     }
 }

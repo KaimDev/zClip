@@ -25,6 +25,14 @@ namespace zClip_Desktop
             _backgroundWorker.CancelAsync();
         }
 
+        public void Clear()
+        {
+            var staThread = new Thread(Clipboard.Clear);
+            staThread.SetApartmentState(ApartmentState.STA);
+            staThread.Start();
+            staThread.Join();
+        }
+
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             string lastText = string.Empty;
@@ -41,6 +49,9 @@ namespace zClip_Desktop
                 staThread.Start();
                 staThread.Join();
 
+                if (temp == string.Empty)
+                    return;
+                
                 if (temp != lastText)
                 {
                     lastText = temp;
