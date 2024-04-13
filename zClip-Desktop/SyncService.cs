@@ -1,32 +1,37 @@
-﻿namespace zClip_Desktop
+﻿using zClip_Desktop.Helpers;
+
+namespace zClip_Desktop
 {
     public class SyncService
     {
         private static SyncService _instance = null;
-        private static string _deviceIP = null;
+        private static TargetIpAddress _targetIp = null;
 
-        private SyncService(string deviceIP)
+        // TODO: Add HttpServer to Inject
+        // TODO: Create HttpClient to Inject too
+        private SyncService(TargetIpAddress targetIp)
         {
-            _deviceIP = deviceIP;
+            _targetIp = targetIp;
         }
         
-        public static SyncService GetInstance(string deviceIP)
+        public static SyncService GetInstance(TargetIpAddress targetIp)
         {
             if (_instance == null)
             {
-                _instance = new SyncService(deviceIP);
+                _instance = new SyncService(targetIp);
             }
             return _instance;
         }
         
         public void DestroyInstance()
         {
+            _targetIp = null;
             _instance = null;
         }
         
-        public string GetDeviceIP()
+        public TargetIpAddress GetDeviceIP()
         {
-            return _deviceIP;
+            return _targetIp;
         }
     }
 }

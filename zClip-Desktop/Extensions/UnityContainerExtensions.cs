@@ -19,9 +19,21 @@ namespace zClip_Desktop.Extensions
             container.RegisterInstance(new OwnIpAddress { IpAddress = IpAddress.ToString() });
         }
 
-        public static void ConfigureSyncService(this IUnityContainer container, string deviceIP)
+        /// <summary>
+        ///     Register the target IP address
+        /// </summary>
+        /// <param name="container"></param>
+        /// <param name="targetIp"></param>
+        public static void RegisterTargetIp(this IUnityContainer container, string targetIp)
         {
-            container.RegisterInstance(SyncService.GetInstance(deviceIP));
+            var targetIpAddress = new TargetIpAddress { IpAddress = targetIp };
+            container.RegisterInstance(targetIpAddress);
+        }
+
+        public static void ConfigureSyncService(this IUnityContainer container)
+        {
+            var targetIp = ((TargetIpAddress)container.Resolve(typeof(TargetIpAddress)));
+            container.RegisterInstance(SyncService.GetInstance(targetIp));
         }
 
         public static void ConfigureHttpServer(this IUnityContainer container)

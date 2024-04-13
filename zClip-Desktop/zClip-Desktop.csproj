@@ -66,6 +66,7 @@
         <Compile Include="ClipboardService.cs" />
         <Compile Include="Extensions\UnityContainerExtensions.cs" />
         <Compile Include="Helpers\OwnIpAddress.cs" />
+        <Compile Include="Helpers\TargetIpAddress.cs" />
         <Compile Include="Inferfaces\IClipboardService.cs" />
         <Compile Include="ServiceCollections.cs" />
         <Compile Include="SyncService.cs" />
