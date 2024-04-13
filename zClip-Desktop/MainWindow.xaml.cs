@@ -18,23 +18,21 @@ namespace zClip_Desktop
         public MainWindow()
         {
             InitializeComponent();
-            InitializeServices();
+            ConfigureServices();
             ConfigureComponents();
         }
 
-        public void InitializeServices()
+        public void ConfigureServices()
         {
             // Get the service collections
             _serviceCollections = ServiceCollections.GetInstance();
             var container = _serviceCollections.GetContainer();
 
             // Configure and start the server
-            _ipAddress = container.Resolve<OwnIpAddress>().IpAddress;
-            container.ConfigureHttpServer(_ipAddress);
+            container.ConfigureHttpServer();
             
             // Configure the clipboard service
             container.ConfigureClipboardService();
-            (container.Resolve(typeof(IClipboardService), null) as IClipboardService).Start();
         }
 
         public void ConfigureComponents()

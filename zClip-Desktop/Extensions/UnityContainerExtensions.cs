@@ -24,8 +24,9 @@ namespace zClip_Desktop.Extensions
             container.RegisterInstance(SyncService.GetInstance(deviceIP));
         }
 
-        public static void ConfigureHttpServer(this IUnityContainer container, string ipAddress)
+        public static void ConfigureHttpServer(this IUnityContainer container)
         {
+            var ipAddress = ((OwnIpAddress)container.Resolve(typeof(OwnIpAddress))).IpAddress;
             container.RegisterInstance(new HttpServer(ipAddress));
         }
 
