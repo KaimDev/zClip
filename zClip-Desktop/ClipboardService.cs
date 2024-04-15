@@ -44,21 +44,20 @@ namespace zClip_Desktop
                 var staThread = new Thread(() =>
                 {
                     temp = Clipboard.GetText();
+
+                    if (temp == string.Empty)
+                        return;
+
+                    if (temp != lastText)
+                    {
+                        lastText = temp;
+                        Console.WriteLine(lastText);
+                        ClipboardChanged(lastText);
+                    }
                 });
                 staThread.SetApartmentState(ApartmentState.STA);
                 staThread.Start();
                 staThread.Join();
-
-                if (temp == string.Empty)
-                    return;
-                
-                if (temp != lastText)
-                {
-                    lastText = temp;
-                    Console.WriteLine(lastText);
-                    ClipboardChanged(lastText);
-                }
-
                 Thread.Sleep(1000);
             }
         }
