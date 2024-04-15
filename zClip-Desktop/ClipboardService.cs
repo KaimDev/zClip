@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
-using zClip_Desktop.Inferfaces;
+using zClip_Desktop.Interfaces;
 
 namespace zClip_Desktop
 {

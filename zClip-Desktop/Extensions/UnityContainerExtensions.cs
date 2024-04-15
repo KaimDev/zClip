@@ -2,7 +2,7 @@
 using Unity;
 using zClip_Desktop.Helpers;
 using System.Linq;
-using zClip_Desktop.Inferfaces;
+using zClip_Desktop.Interfaces;
 
 namespace zClip_Desktop.Extensions
 {
@@ -38,8 +38,8 @@ namespace zClip_Desktop.Extensions
 
         public static void ConfigureHttpServer(this IUnityContainer container)
         {
-            var ipAddress = ((OwnIpAddress)container.Resolve(typeof(OwnIpAddress))).IpAddress;
-            container.RegisterInstance(new HttpServer(ipAddress));
+            var ownIpAddress = (OwnIpAddress)container.Resolve(typeof(OwnIpAddress));
+            container.RegisterInstance(new ListenerService(ownIpAddress));
         }
 
         public static void ConfigureClipboardService(this IUnityContainer container)

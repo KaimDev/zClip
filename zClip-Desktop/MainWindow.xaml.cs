@@ -1,7 +1,6 @@
 ﻿using Unity;
 using zClip_Desktop.Extensions;
-using zClip_Desktop.Helpers;
-using zClip_Desktop.Inferfaces;
+using zClip_Desktop.Interfaces;
 
 namespace zClip_Desktop
 {
@@ -10,7 +9,7 @@ namespace zClip_Desktop
     /// </summary>
     public partial class MainWindow
     {
-        private HttpServer _httpServer;
+        private ListenerService _listenerService;
         private ServiceCollections _serviceCollections;
 
         private string _ipAddress;
@@ -33,6 +32,7 @@ namespace zClip_Desktop
             
             // Configure the clipboard service
             container.ConfigureClipboardService();
+            (container.Resolve(typeof(IClipboardService)) as IClipboardService).Start();
         }
 
         public void ConfigureComponents()

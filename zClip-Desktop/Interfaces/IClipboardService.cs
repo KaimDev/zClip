@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace zClip_Desktop.Inferfaces
+namespace zClip_Desktop.Interfaces
 {
     public interface IClipboardService
     {

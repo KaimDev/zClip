@@ -1,9 +1,8 @@
-﻿using System.IO;
-using System.Threading;
+﻿using System.Threading;
 using FluentAssertions;
 using Xunit;
 using zClip_Desktop;
-using zClip_Desktop.Inferfaces;
+using zClip_Desktop.Interfaces;
 using NetArchTest.Rules;
 using ClipboardService = zClip_Desktop.ClipboardService;
 
