@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using zClip_Desktop.CustomEventArgs;
 using zClip_Desktop.Interfaces;
 
 namespace zClip_Desktop.Services
@@ -66,16 +67,6 @@ namespace zClip_Desktop.Services
         {
             ClipboardEventArgs args = new ClipboardEventArgs(text);
             OnClipboardChanged?.Invoke(this, args);
-        }
-
-        public class ClipboardEventArgs : EventArgs
-        {
-            public ClipboardEventArgs(string text)
-            {
-                Text = text;
-            }
-
-            public string Text { get; set; }
         }
     }
 }
