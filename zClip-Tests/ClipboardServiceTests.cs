@@ -1,10 +1,9 @@
 ﻿using System.Threading;
 using FluentAssertions;
 using Xunit;
-using zClip_Desktop;
 using zClip_Desktop.Interfaces;
 using NetArchTest.Rules;
-using ClipboardService = zClip_Desktop.ClipboardService;
+using zClip_Desktop.Services;
 
 namespace zClip_Tests
 {

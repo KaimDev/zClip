@@ -1,7 +1,7 @@
 ﻿using Unity;
 using zClip_Desktop.Extensions;
 
-namespace zClip_Desktop
+namespace zClip_Desktop.Services
 {
     public class ServiceCollections
     {

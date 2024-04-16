@@ -1,4 +1,5 @@
 ﻿using System;
+using zClip_Desktop.Services;
 
 namespace zClip_Desktop.Interfaces
 {

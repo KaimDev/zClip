@@ -2,7 +2,7 @@
 using zClip_Desktop.CustomEventArgs;
 using zClip_Desktop.Interfaces;
 
-namespace zClip_Desktop
+namespace zClip_Desktop.Services
 {
     public class SecurityService : ISecurityService
     {

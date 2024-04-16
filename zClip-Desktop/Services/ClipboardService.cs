@@ -4,7 +4,7 @@ using System.Threading;
 using System.Windows;
 using zClip_Desktop.Interfaces;
 
-namespace zClip_Desktop
+namespace zClip_Desktop.Services
 {
     public sealed class ClipboardService : IClipboardService
     {

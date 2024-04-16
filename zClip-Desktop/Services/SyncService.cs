@@ -1,6 +1,6 @@
 ﻿using zClip_Desktop.Helpers;
 
-namespace zClip_Desktop
+namespace zClip_Desktop.Services
 {
     public class SyncService
     {
