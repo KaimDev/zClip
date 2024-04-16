@@ -63,14 +63,18 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
+        <Compile Include="CustomEventArgs\ClientEventArgs.cs" />
+        <Compile Include="CustomEventArgs\ClipboardEventArgs.cs" />
         <Compile Include="CustomEventArgs\ListenerEventArgs.cs" />
         <Compile Include="CustomEventArgs\SecurityEventArgs.cs" />
         <Compile Include="Extensions\UnityContainerExtensions.cs" />
         <Compile Include="Helpers\OwnIpAddress.cs" />
         <Compile Include="Helpers\TargetIpAddress.cs" />
+        <Compile Include="Interfaces\IClientService.cs" />
         <Compile Include="Interfaces\IClipboardService.cs" />
         <Compile Include="Interfaces\IListenerService.cs" />
         <Compile Include="Interfaces\ISecurityService.cs" />
+        <Compile Include="Services\ClientService.cs" />
         <Compile Include="Services\ClipboardService.cs" />
         <Compile Include="Services\ListenerService.cs" />
         <Compile Include="Services\SecurityService.cs" />
