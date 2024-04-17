@@ -28,8 +28,7 @@ namespace zClip_Desktop.Extensions
         /// <param name="targetIp"></param>
         public static void RegisterTargetIp(this IUnityContainer container, string targetIp)
         {
-            var targetIpAddress = new TargetIpAddress { IpAddress = targetIp };
-            container.RegisterInstance(targetIpAddress);
+            container.RegisterType<TargetIpAddress>(new InjectionConstructor(targetIp));
         }
 
         public static void ConfigureSyncService(this IUnityContainer container)
