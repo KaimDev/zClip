@@ -18,7 +18,18 @@ namespace zClip_Desktop.Extensions
                 where ipAddress.ToString().StartsWith("192.168")
                 select ipAddress).First().ToString();
 
-            container.RegisterInstance(new OwnIpAddress { IpAddress = IpAddress.ToString() });
+            container.RegisterType<OwnIpAddress>(new InjectionConstructor(IpAddress));
+        }
+        
+        public static void ConfigureListenerService(this IUnityContainer container)
+        {
+            var ownIpAddress = container.Resolve(typeof(OwnIpAddress));
+            container.RegisterSingleton<IListenerService, ListenerService>(new InjectionConstructor(ownIpAddress));
+        }
+
+        public static void ConfigureClipboardService(this IUnityContainer container)
+        {
+            container.RegisterSingleton(typeof(IClipboardService), typeof(ClipboardService));
         }
 
         /// <summary>
@@ -50,17 +61,6 @@ namespace zClip_Desktop.Extensions
                 listener,
                 security
             ));
-        }
-
-        public static void ConfigureListenerService(this IUnityContainer container)
-        {
-            var ownIpAddress = container.Resolve(typeof(OwnIpAddress));
-            container.RegisterSingleton<IListenerService, ListenerService>(new InjectionConstructor(ownIpAddress));
-        }
-
-        public static void ConfigureClipboardService(this IUnityContainer container)
-        {
-            container.RegisterSingleton(typeof(IClipboardService), typeof(ClipboardService));
         }
     }
 }

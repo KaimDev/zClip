@@ -26,6 +26,8 @@ namespace zClip_Desktop.Services
         private void ConfigureServices()
         {
             _container.ConfigureOwnIp();
+            _container.ConfigureListenerService();
+            _container.ConfigureClipboardService();
         }
         
         public IUnityContainer GetContainer()
