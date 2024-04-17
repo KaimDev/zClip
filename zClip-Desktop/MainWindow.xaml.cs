@@ -29,11 +29,10 @@ namespace zClip_Desktop
             var container = _serviceCollections.GetContainer();
 
             // Configure and start the server
-            container.ConfigureHttpServer();
+            container.ConfigureListenerService();
             
             // Configure the clipboard service
             container.ConfigureClipboardService();
-            (container.Resolve(typeof(IClipboardService)) as IClipboardService).Start();
         }
 
         public void ConfigureComponents()

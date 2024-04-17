@@ -52,10 +52,10 @@ namespace zClip_Desktop.Extensions
             ));
         }
 
-        public static void ConfigureHttpServer(this IUnityContainer container)
+        public static void ConfigureListenerService(this IUnityContainer container)
         {
-            var ownIpAddress = (OwnIpAddress)container.Resolve(typeof(OwnIpAddress));
-            container.RegisterInstance(new ListenerService(ownIpAddress));
+            var ownIpAddress = container.Resolve(typeof(OwnIpAddress));
+            container.RegisterSingleton<IListenerService, ListenerService>(new InjectionConstructor(ownIpAddress));
         }
 
         public static void ConfigureClipboardService(this IUnityContainer container)
