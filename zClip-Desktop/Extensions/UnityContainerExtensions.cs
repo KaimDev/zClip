@@ -2,6 +2,7 @@
 using Unity;
 using zClip_Desktop.Helpers;
 using System.Linq;
+using Unity.Injection;
 using zClip_Desktop.Interfaces;
 using zClip_Desktop.Services;
 
@@ -33,8 +34,17 @@ namespace zClip_Desktop.Extensions
 
         public static void ConfigureSyncService(this IUnityContainer container)
         {
-            var targetIp = ((TargetIpAddress)container.Resolve(typeof(TargetIpAddress)));
-            container.RegisterInstance(SyncService.GetInstance(targetIp));
+            var client = container.Resolve(typeof(IClientService));
+            var clipboard = container.Resolve(typeof(IClipboardService));
+            var listener = container.Resolve(typeof(IListenerService));
+            var security = container.Resolve(typeof(ISecurityService));
+
+            container.RegisterSingleton<ISyncService, SyncService>(new InjectionConstructor(
+                client,
+                clipboard,
+                listener,
+                security
+            ));
         }
 
         public static void ConfigureHttpServer(this IUnityContainer container)

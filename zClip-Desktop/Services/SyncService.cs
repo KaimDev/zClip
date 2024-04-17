@@ -1,37 +1,39 @@
-﻿using zClip_Desktop.Helpers;
+﻿using System;
+using zClip_Desktop.CustomEventArgs;
+using zClip_Desktop.Helpers;
+using zClip_Desktop.Interfaces;
 
 namespace zClip_Desktop.Services
 {
-    public class SyncService
+    public class SyncService : ISyncService
     {
-        private static SyncService _instance = null;
-        private static TargetIpAddress _targetIp = null;
+        public event EventHandler<SyncEventArgs> OnSyncMessage;
 
-        // TODO: Add HttpServer to Inject
-        // TODO: Create HttpClient to Inject too
-        private SyncService(TargetIpAddress targetIp)
+        private IClientService _clientService;
+        private IListenerService _listenerService;
+        private IClipboardService _clipboardService;
+        private ISecurityService _securityService;
+
+        public SyncService(
+            IClientService clientService,
+            IListenerService listenerService,
+            IClipboardService clipboardService,
+            ISecurityService securityService)
         {
-            _targetIp = targetIp;
+            _clientService = clientService;
+            _listenerService = listenerService;
+            _clipboardService = clipboardService;
+            _securityService = securityService;
         }
-        
-        public static SyncService GetInstance(TargetIpAddress targetIp)
+
+        public void Start()
         {
-            if (_instance == null)
-            {
-                _instance = new SyncService(targetIp);
-            }
-            return _instance;
+            throw new NotImplementedException();
         }
-        
-        public void DestroyInstance()
+
+        public void Stop()
         {
-            _targetIp = null;
-            _instance = null;
-        }
-        
-        public TargetIpAddress GetDeviceIP()
-        {
-            return _targetIp;
+            throw new NotImplementedException();
         }
     }
 }
