@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using zClip_Desktop.CustomEventArgs;
+using zClip_Desktop.Helpers;
 using zClip_Desktop.Interfaces;
 
 namespace zClip_Desktop.Services
@@ -10,6 +11,13 @@ namespace zClip_Desktop.Services
         public event EventHandler<ClientEventArgs> OnClientChange;
 
         private BackgroundWorker _backgroundWorker = new BackgroundWorker();
+
+        private TargetIpAddress _targetIpAddress;
+
+        public ClientService(TargetIpAddress targetIpAddress)
+        {
+            _targetIpAddress = targetIpAddress;
+        }
         
         public void Start()
         {

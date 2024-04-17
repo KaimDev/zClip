@@ -22,7 +22,7 @@ namespace zClip_Desktop
             ConfigureComponents();
         }
 
-        public void ConfigureServices()
+        private void ConfigureServices()
         {
             // Get the service collections
             _serviceCollections = ServiceCollections.GetInstance();

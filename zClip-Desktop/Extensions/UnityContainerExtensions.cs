@@ -14,9 +14,9 @@ namespace zClip_Desktop.Extensions
         {
             var IPHost = Dns.GetHostEntry(Dns.GetHostName());
 
-            string IpAddress = (from ipAddres in IPHost.AddressList
-                where ipAddres.ToString().StartsWith("192.168")
-                select ipAddres).First().ToString();
+            string IpAddress = (from ipAddress in IPHost.AddressList
+                where ipAddress.ToString().StartsWith("192.168")
+                select ipAddress).First().ToString();
 
             container.RegisterInstance(new OwnIpAddress { IpAddress = IpAddress.ToString() });
         }
@@ -29,6 +29,12 @@ namespace zClip_Desktop.Extensions
         public static void RegisterTargetIp(this IUnityContainer container, string targetIp)
         {
             container.RegisterType<TargetIpAddress>(new InjectionConstructor(targetIp));
+        }
+
+        public static void RegisterClientType(this IUnityContainer container)
+        {
+            var targetIp = container.Resolve<TargetIpAddress>();
+            container.RegisterType<IClientService, ClientService>(new InjectionConstructor(targetIp));
         }
 
         public static void ConfigureSyncService(this IUnityContainer container)
