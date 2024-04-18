@@ -24,8 +24,9 @@ Is a synchronization tool and open source for Windows that allows you to copy an
 ## Expected Features
 
 1. End-to-end encryption.
-2. Optionality to choose if starts with the system or not.
+2. Optionality to choose whether it starts with the system or not.
 3. Fast and lightweight.
+4. Send text, images and files.
 
 
 ## Benchmarks
@@ -53,4 +54,4 @@ Global total time: 00:01:29 (89.77 sec), executed benchmarks: 1
 Artifacts cleanup is finished
 ```
 
-**Explanation**: The method `GetALargeTextFromClipboard` is executed a lot of times the `ClipboardService` to get the average time it takes to get a text of 500 words from the clipboard.
+**Explanation**: The method `GetALargeTextFromClipboard` is responsible for executing the ClipboardService multiple times to determine the average time it takes to retrieve a 500-word text from the clipboard.
