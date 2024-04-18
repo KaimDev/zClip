@@ -1,6 +1,6 @@
 ﻿# zClip for Windows
 
-Is a synchronization tool and open source for Windows that allows you to copy and paste text and images between your Windows PC and your Android device.
+It is a synchronization tool and open source for Windows that allows you to copy and paste text and images between your Windows PC and your Android device.
 
 ![image](https://github.com/KaimDev/zClip-Desktop/assets/88113215/6647c757-f91b-441b-850c-b1b67769bba8)
 
@@ -13,7 +13,7 @@ Is a synchronization tool and open source for Windows that allows you to copy an
 
 ## How does it work?
 
-* Using the LAN network, an Ipv4 address is assigned to the Windows PC and the Android device by the router. 
+* It Uses the LAN network, an Ipv4 address is assigned to the Windows PC and the Android device by the router. 
 
 
 * zClip detects the Ipv4 address of them and establishes a connection.
