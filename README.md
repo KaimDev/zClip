@@ -31,7 +31,7 @@ Is a synchronization tool and open source for Windows that allows you to copy an
 
 ## Benchmarks
 
-**ClipboardService**:
+[**ClipboardService**](https://github.com/KaimDev/zClip-Desktop/blob/main/zClip-Desktop/Services/ClipboardService.cs)
 
 ```shell
 // * Summary *
@@ -55,3 +55,5 @@ Artifacts cleanup is finished
 ```
 
 **Explanation**: The method `GetALargeTextFromClipboard` is responsible for executing the ClipboardService multiple times to determine the average time it takes to retrieve a 500-word text from the clipboard.
+
+[By KaimDev](https://github.com/KaimDev)
