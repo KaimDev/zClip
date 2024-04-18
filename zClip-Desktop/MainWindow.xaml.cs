@@ -20,7 +20,7 @@ namespace zClip_Desktop
             ConfigureComponents();
         }
 
-        public void ConfigureComponents()
+        private void ConfigureComponents()
         {
             _serviceCollections = ServiceCollections.GetInstance();
             var ownIpAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>();

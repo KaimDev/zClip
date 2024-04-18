@@ -9,12 +9,11 @@ namespace zClip_Tests
 {
     public class ClipboardServiceTests
     {
-        private IClipboardService _clipboardService;
+        private readonly IClipboardService _clipboardService;
         
         public ClipboardServiceTests()
         {
-            var serviceCollections = ServiceCollections.GetInstance();
-            _clipboardService = serviceCollections.GetContainer().Resolve(typeof(ClipboardService), null) as IClipboardService;
+            _clipboardService = new ClipboardService();
         }
 
         [Fact]
@@ -41,7 +40,7 @@ namespace zClip_Tests
             _clipboardService.OnClipboardChanged += (sender, args) => eventRaised = true;
             
             _clipboardService.Start();
-            TextCopy.ClipboardService.SetTextAsync(text);
+            TextCopy.ClipboardService.SetText(text);
             Thread.Sleep(2000);
             _clipboardService.Stop();
             
@@ -52,10 +51,10 @@ namespace zClip_Tests
         public void ClipboardService_Should_Not_Invoke_Event()
         {
             var eventRaised = false;
-            _clipboardService.OnClipboardChanged += (sender, args) => eventRaised = true;
             
-            _clipboardService.Clear();
             _clipboardService.Start();
+            _clipboardService.Clear();
+            _clipboardService.OnClipboardChanged += (sender, args) => eventRaised = true;
             _clipboardService.Stop();
             
             eventRaised.Should().BeFalse();
