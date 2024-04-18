@@ -4,17 +4,18 @@ using static zClip_BenchMark.LoremIpsum;
 
 namespace zClip_BenchMark
 {
+    [MemoryDiagnoser]
     public class ClipboardBenchMark
     {
         private readonly ClipboardService _clipboardServiceTests = new ClipboardService();
-        
+
         [Benchmark]
         public void GetALargeTextFromClipboard()
         {
             _clipboardServiceTests.Start();
 
             TextCopy.ClipboardService.SetText(LoremIpsumText);
-            
+
             _clipboardServiceTests.Stop();
         }
     }

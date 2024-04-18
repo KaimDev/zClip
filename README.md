@@ -42,14 +42,14 @@ AMD Ryzen 5 3550H with Radeon Vega Mobile Gfx, 1 CPU, 8 logical and 4 physical c
   DefaultJob : .NET Framework 4.8.1 (4.8.9181.0), X86 LegacyJIT
 
 
-| Method                     | Mean     | Error     | StdDev    |
-|--------------------------- |---------:|----------:|----------:|
-| GetALargeTextFromClipboard | 1.231 ms | 0.1142 ms | 0.3278 ms |
+| Method                     | Mean     | Error     | StdDev    | Gen0   | Allocated |
+|--------------------------- |---------:|----------:|----------:|-------:|----------:|
+| GetALargeTextFromClipboard | 1.485 ms | 0.0898 ms | 0.2633 ms | 1.9531 |   6.52 KB |
 
 // ***** BenchmarkRunner: End *****
-Run time: 00:01:22 (82.37 sec), executed benchmarks: 1
+Run time: 00:03:04 (184.67 sec), executed benchmarks: 1
 
-Global total time: 00:01:29 (89.77 sec), executed benchmarks: 1
+Global total time: 00:03:10 (190.99 sec), executed benchmarks: 1
 // * Artifacts cleanup *
 Artifacts cleanup is finished
 ```
