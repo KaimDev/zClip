@@ -2,6 +2,9 @@
 
 Is a synchronization tool and open source for Windows that allows you to copy and paste text and images between your Windows PC and your Android device.
 
+![image](https://github.com/KaimDev/zClip-Desktop/assets/88113215/6647c757-f91b-441b-850c-b1b67769bba8)
+
+
 ## Technologies for this project
 
 * C#
