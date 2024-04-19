@@ -27,6 +27,7 @@ It is a synchronization tool and open source for Windows that allows you to copy
 2. Optionality to choose whether it starts with the system or not.
 3. Fast and lightweight.
 4. Send text, images and files.
+5. Supports for Spanish and English
 
 
 ## Benchmarks
