@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using zClip_Desktop.CustomEventArgs;
 
 namespace zClip_Desktop.Interfaces
@@ -8,7 +9,7 @@ namespace zClip_Desktop.Interfaces
         event EventHandler<ClientEventArgs> OnClientChange;
         void Start();
         void Stop();
-        void SendClipboardContent();
-        void TestForTargetConnection();
+        Task SendClipboardContent(string clipboardContent);
+        Task TestForTargetConnection();
     }
 }

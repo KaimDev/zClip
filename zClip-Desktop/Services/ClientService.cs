@@ -1,5 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Text.Json;
 using zClip_Desktop.CustomEventArgs;
 using zClip_Desktop.Helpers;
 using zClip_Desktop.Interfaces;
@@ -12,31 +17,99 @@ namespace zClip_Desktop.Services
 
         private BackgroundWorker _backgroundWorker = new BackgroundWorker();
 
-        private TargetIpAddress _targetIpAddress;
+        private readonly Uri _targetIpAddress;
+
+        private HttpClient _httpClient;
 
         public ClientService(TargetIpAddress targetIpAddress)
         {
-            _targetIpAddress = targetIpAddress;
+            _targetIpAddress = new Uri($"http://{targetIpAddress.IpAddress}:{OwnIpAddress.Port}");
         }
-        
+
         public void Start()
         {
-            throw new NotImplementedException();
+            if (_httpClient != null)
+            {
+                OnClientChange?.Invoke(this, new ClientEventArgs("ClientService is running."));
+            }
+
+            _httpClient = new HttpClient();
         }
 
         public void Stop()
         {
-            throw new NotImplementedException();
+            if (_httpClient is null)
+            {
+                OnClientChange?.Invoke(this, new ClientEventArgs("ClientService is not started."));
+                return;
+            }
+
+            _httpClient = null;
         }
 
-        public void SendClipboardContent()
+        public async Task SendClipboardContent(string clipboardContent)
         {
-            throw new NotImplementedException();
+            StringContent jsonContent = new StringContent(
+                JsonSerializer.Serialize(new
+                {
+                    message = clipboardContent
+                }), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(_targetIpAddress, jsonContent);
+
+            ClientServiceChanged(response);
         }
 
-        public void TestForTargetConnection()
+        public async Task TestForTargetConnection()
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.GetAsync(_targetIpAddress);
+            
+            ClientServiceChanged(response);
+        }
+
+        private void ClientServiceChanged(dynamic content)
+        {
+            switch (content)
+            {
+                case HttpResponseMessage response:
+                    EventIsAHttpResponse(response);
+                    break;
+                case String message:
+                    EventIsAString(message);
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        private async void EventIsAHttpResponse(HttpResponseMessage response)
+        {
+            var clientArgs = new ClientEventArgs();
+            var statusCode = response.StatusCode;
+
+            if (statusCode == HttpStatusCode.Accepted)
+            {
+                clientArgs.StatusCode = (int)statusCode;
+                clientArgs.Message = "Clipboard has been sent";
+            }
+            else if (statusCode == HttpStatusCode.OK)
+            {
+                clientArgs.StatusCode = (int)statusCode;
+                clientArgs.Message = "The connection is successful";
+            }
+            else
+            {
+                var jsonContent = await response.Content.ReadAsStringAsync();
+                var message = JsonSerializer.Deserialize<string>(jsonContent);
+                clientArgs.Message = message;
+            }
+
+            OnClientChange?.Invoke(this, clientArgs);
+        }
+
+        private void EventIsAString(string message)
+        {
+            OnClientChange?.Invoke(this, new ClientEventArgs(message));
         }
     }
 }
