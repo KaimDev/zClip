@@ -15,7 +15,7 @@ namespace zClip_Desktop.Services
         
         public ListenerService(OwnIpAddress ownIpAddress)
         {
-            _baseUrl = new Uri($"http://{ownIpAddress.IpAddress}:{ownIpAddress.Port}/");
+            _baseUrl = new Uri($"http://{ownIpAddress.IpAddress}:{OwnIpAddress.Port}/");
         }
         
         public event EventHandler<ListenerEventArgs> OnListenerChange;
