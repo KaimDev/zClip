@@ -2,6 +2,7 @@
 using Unity;
 using zClip_Desktop.Helpers;
 using System.Linq;
+using System.Net.Http;
 using Unity.Injection;
 using zClip_Desktop.Interfaces;
 using zClip_Desktop.Services;
@@ -45,7 +46,7 @@ namespace zClip_Desktop.Extensions
         public static void RegisterClientType(this IUnityContainer container)
         {
             var targetIp = container.Resolve<TargetIpAddress>();
-            container.RegisterType<IClientService, ClientService>(new InjectionConstructor(targetIp));
+            container.RegisterType<IClientService, ClientService>(new InjectionConstructor(targetIp, typeof(HttpClient)));
         }
 
         public static void ConfigureSyncService(this IUnityContainer container)

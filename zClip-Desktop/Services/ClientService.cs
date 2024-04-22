@@ -21,30 +21,10 @@ namespace zClip_Desktop.Services
 
         private HttpClient _httpClient;
 
-        public ClientService(TargetIpAddress targetIpAddress)
+        public ClientService(TargetIpAddress targetIpAddress, HttpClient httpClient)
         {
             _targetIpAddress = new Uri($"http://{targetIpAddress.IpAddress}:{OwnIpAddress.Port}");
-        }
-
-        public void Start()
-        {
-            if (_httpClient != null)
-            {
-                OnClientChange?.Invoke(this, new ClientEventArgs("ClientService is running."));
-            }
-
-            _httpClient = new HttpClient();
-        }
-
-        public void Stop()
-        {
-            if (_httpClient is null)
-            {
-                OnClientChange?.Invoke(this, new ClientEventArgs("ClientService is not started."));
-                return;
-            }
-
-            _httpClient = null;
+            _httpClient = httpClient;
         }
 
         public async Task SendClipboardContent(string clipboardContent)
@@ -74,9 +54,6 @@ namespace zClip_Desktop.Services
                 case HttpResponseMessage response:
                     EventIsAHttpResponse(response);
                     break;
-                case String message:
-                    EventIsAString(message);
-                    break;
                 default:
                     return;
             }
@@ -105,11 +82,6 @@ namespace zClip_Desktop.Services
             }
 
             OnClientChange?.Invoke(this, clientArgs);
-        }
-
-        private void EventIsAString(string message)
-        {
-            OnClientChange?.Invoke(this, new ClientEventArgs(message));
         }
     }
 }
