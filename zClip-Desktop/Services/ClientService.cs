@@ -78,6 +78,11 @@ namespace zClip_Desktop.Services
                 clientArgs.StatusCode = (int)statusCode;
                 clientArgs.Message = "Not Found";
             }
+            else if (statusCode == HttpStatusCode.ServiceUnavailable)
+            {
+                clientArgs.StatusCode = (int)statusCode;
+                clientArgs.Message = "Service Unavailable";
+            }
             else
             {
                 // var jsonContent = await response.Content.ReadAsStringAsync();

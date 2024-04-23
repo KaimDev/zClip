@@ -28,5 +28,19 @@ namespace zClip_Tests
 
             clientEventArgs.StatusCode.Should().Be(202);
         }
+
+        [Fact]
+        public async Task Clipboard_Was_Not_Sent_For_Service_Unavailable_503()
+        {
+            var messageHandlerMock = new MessageHandlerMock(HttpStatusCode.ServiceUnavailable);
+            _clientService = new ClientService(_targetIpAddress, new HttpClient(messageHandlerMock));
+
+            ClientEventArgs clientEventArgs = new ClientEventArgs();
+            _clientService.OnClientChange += (sender, args) => clientEventArgs = args;
+
+            await _clientService.SendClipboardContent("Test");
+
+            clientEventArgs.StatusCode.Should().Be(503);
+        }
     }
 }
