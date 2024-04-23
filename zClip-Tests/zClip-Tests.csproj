@@ -107,7 +107,7 @@
         <Compile Include="ClientServiceTests.cs" />
         <Compile Include="ClipboardServiceTests.cs" />
         <Compile Include="Mocks\MessageHandlerMock.cs" />
-        <Compile Include="Tests.cs" />
+        <Compile Include="Mocks\MessageHandlerTimeOutMock.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>

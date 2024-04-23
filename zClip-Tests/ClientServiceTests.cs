@@ -1,5 +1,7 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
@@ -41,6 +43,25 @@ namespace zClip_Tests
             await _clientService.SendClipboardContent("Test");
 
             clientEventArgs.StatusCode.Should().Be(503);
+        }
+
+        [Fact]
+        public async Task Clipboard_Was_Not_Sent_By_Time_Out()
+        {
+            var messageHandlerMock = new MessageHandlerTimeOutMock(TimeSpan.FromSeconds(5)); // 5 seconds delay
+            HttpClient httpClient = new HttpClient(messageHandlerMock);
+            _clientService = new ClientService(_targetIpAddress, httpClient);
+
+            ClientEventArgs clientEventArgs = new ClientEventArgs();
+            _clientService.OnClientChange += (sender, args) => clientEventArgs = args;
+
+            var cts = new CancellationTokenSource();
+            cts.CancelAfter(TimeSpan.FromSeconds(2)); // Cancel after 2 seconds
+
+            await _clientService.SendClipboardContent("Test", cts.Token);
+            
+            // Assert that the status code and message are not set
+            clientEventArgs.StatusCode.Should().Be(500);
         }
     }
 }

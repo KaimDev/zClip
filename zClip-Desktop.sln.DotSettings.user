@@ -10,5 +10,7 @@
     &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ClipboardServiceTests.ClipboardService_Should_Invoke_Event&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ClipboardServiceTests.ClipboardService_Should_Not_Invoke_Event&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ClientServiceTests.Clipboard_Should_Have_Been_Sent_202&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ClientServiceTests.Clipboard_Was_Not_Sent_For_Service_Unavailable_503&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ClientServiceTests.Clipboard_Was_Not_Sent_By_Time_Out&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
