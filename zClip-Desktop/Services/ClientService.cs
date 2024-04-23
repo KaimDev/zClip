@@ -19,8 +19,7 @@ namespace zClip_Desktop.Services
 
         private readonly Uri _targetIpAddress;
 
-        private HttpClient _httpClient;
-
+        private readonly HttpClient _httpClient;
         public ClientService(TargetIpAddress targetIpAddress, HttpClient httpClient)
         {
             _targetIpAddress = new Uri($"http://{targetIpAddress.IpAddress}:{OwnIpAddress.Port}");
@@ -40,7 +39,7 @@ namespace zClip_Desktop.Services
             ClientServiceChanged(response);
         }
 
-        public async Task TestForTargetConnection()
+        public async Task TestConnectionToTarget()
         {
             var response = await _httpClient.GetAsync(_targetIpAddress);
             
@@ -74,11 +73,18 @@ namespace zClip_Desktop.Services
                 clientArgs.StatusCode = (int)statusCode;
                 clientArgs.Message = "The connection is successful";
             }
+            else if (statusCode == HttpStatusCode.NotFound)
+            {
+                clientArgs.StatusCode = (int)statusCode;
+                clientArgs.Message = "Not Found";
+            }
             else
             {
-                var jsonContent = await response.Content.ReadAsStringAsync();
-                var message = JsonSerializer.Deserialize<string>(jsonContent);
-                clientArgs.Message = message;
+                // var jsonContent = await response.Content.ReadAsStringAsync();
+                // var message = JsonSerializer.Deserialize<string>(jsonContent);
+                // clientArgs.Message = message;
+                
+                // TODO: DEFAULT CASE
             }
 
             OnClientChange?.Invoke(this, clientArgs);

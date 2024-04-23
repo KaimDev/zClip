@@ -8,6 +8,6 @@ namespace zClip_Desktop.Interfaces
     {
         event EventHandler<ClientEventArgs> OnClientChange;
         Task SendClipboardContent(string clipboardContent);
-        Task TestForTargetConnection();
+        Task TestConnectionToTarget();
     }
 }
