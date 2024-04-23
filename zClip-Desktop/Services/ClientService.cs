@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Threading;
 using zClip_Desktop.CustomEventArgs;
 using zClip_Desktop.Helpers;
 using zClip_Desktop.Interfaces;
@@ -20,13 +21,14 @@ namespace zClip_Desktop.Services
         private readonly Uri _targetIpAddress;
 
         private readonly HttpClient _httpClient;
+
         public ClientService(TargetIpAddress targetIpAddress, HttpClient httpClient)
         {
             _targetIpAddress = new Uri($"http://{targetIpAddress.IpAddress}:{OwnIpAddress.Port}");
             _httpClient = httpClient;
         }
 
-        public async Task SendClipboardContent(string clipboardContent)
+        public async Task SendClipboardContent(string clipboardContent, CancellationToken cancellationToken = default)
         {
             StringContent jsonContent = new StringContent(
                 JsonSerializer.Serialize(new
@@ -34,15 +36,26 @@ namespace zClip_Desktop.Services
                     message = clipboardContent
                 }), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync(_targetIpAddress, jsonContent);
+            try
+            {
+                var response =  _httpClient.PostAsync(_targetIpAddress, jsonContent, cancellationToken);
+                
+                cancellationToken.ThrowIfCancellationRequested();
 
-            ClientServiceChanged(response);
+                await response;
+                
+                ClientServiceChanged(response.Result);
+            }
+            catch (Exception e)
+            {
+                ClientServiceChanged(e);
+            }
         }
 
         public async Task TestConnectionToTarget()
         {
             var response = await _httpClient.GetAsync(_targetIpAddress);
-            
+
             ClientServiceChanged(response);
         }
 
@@ -53,12 +66,15 @@ namespace zClip_Desktop.Services
                 case HttpResponseMessage response:
                     EventIsAHttpResponse(response);
                     break;
+                case Exception exception:
+                    EventIsAnException(exception);
+                    break;
                 default:
                     return;
             }
         }
 
-        private async void EventIsAHttpResponse(HttpResponseMessage response)
+        private void EventIsAHttpResponse(HttpResponseMessage response)
         {
             var clientArgs = new ClientEventArgs();
             var statusCode = response.StatusCode;
@@ -85,14 +101,20 @@ namespace zClip_Desktop.Services
             }
             else
             {
-                // var jsonContent = await response.Content.ReadAsStringAsync();
-                // var message = JsonSerializer.Deserialize<string>(jsonContent);
-                // clientArgs.Message = message;
-                
-                // TODO: DEFAULT CASE
+                clientArgs.StatusCode = (int)response.StatusCode;
+                clientArgs.Message = response.ReasonPhrase;
             }
 
             OnClientChange?.Invoke(this, clientArgs);
+        }
+
+        private void EventIsAnException(Exception exception)
+        {
+            ClientEventArgs clientEventArgs = new ClientEventArgs();
+            clientEventArgs.Message = exception.Message;
+            clientEventArgs.StatusCode = (int)HttpStatusCode.InternalServerError;
+            
+            OnClientChange?.Invoke(this, clientEventArgs);
         }
     }
 }
