@@ -1,6 +1,11 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\johan\AppData\Local\JetBrains\Rider2024.1\resharper-host\temp\Rider\vAny\CoverageData\_zClip-Desktop.731928980\Snapshot\snapshot.utdcvr</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9d380387_002D9bc1_002D48b8_002Dba1d_002D4d15f1f27d65/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Test1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=425c46e9_002Dd1c2_002D4073_002Daa4b_002D84560c6c990f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ListenerService_Should_Return_202" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ListenerServiceTests.ListenerService_Should_Return_202&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9d380387_002D9bc1_002D48b8_002Dba1d_002D4d15f1f27d65/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.Tests.Test1&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ClipboardServiceTests.ClipboardService_Should_Be_The_Only_Inherit_Interface&lt;/TestId&gt;&#xD;
@@ -12,5 +17,12 @@
     &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ClientServiceTests.Clipboard_Should_Have_Been_Sent_202&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ClientServiceTests.Clipboard_Was_Not_Sent_For_Service_Unavailable_503&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ClientServiceTests.Clipboard_Was_Not_Sent_By_Time_Out&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ListenerServiceTests.ListenerService_Should_Return_200&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ListenerServiceTests.ListenerService_Should_Return_202&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a580b4b6_002Dc399_002D448a_002D8447_002D82cdb3cb592b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ListenerService_Should_Return_202 #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::7D65F28B-9D7D-4F3B-A6A6-75FEB1589449::.NETFramework,Version=v4.8::zClip_Tests.ListenerServiceTests.ListenerService_Should_Return_202&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
