@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using zClip_Desktop.CustomEventArgs;
 
 namespace zClip_Desktop.Interfaces
@@ -8,7 +9,8 @@ namespace zClip_Desktop.Interfaces
         event EventHandler<ListenerEventArgs> OnListenerChange;
         void Start();
         void Stop();
-        void ReceiveClipboardContent();
-        void TestConnectionFromTarget();
+        void ReceiveClipboardContent(HttpListenerContext context);
+        void TestConnectionFromTarget(HttpListenerContext context);
+        void NotFoundResponse(HttpListenerContext context);
     }
 }

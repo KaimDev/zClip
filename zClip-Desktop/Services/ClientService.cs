@@ -52,6 +52,7 @@ namespace zClip_Desktop.Services
             }
         }
 
+        // TODO: Make a Test
         public async Task TestConnectionToTarget()
         {
             var response = await _httpClient.GetAsync(_targetIpAddress);
