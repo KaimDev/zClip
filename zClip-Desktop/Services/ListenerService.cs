@@ -13,18 +13,18 @@ namespace zClip_Desktop.Services
     public class ListenerService : IListenerService
     {
         public event EventHandler<ListenerEventArgs> OnListenerChange;
-        
+
         private string _baseUrl;
         private HttpListener _listener;
         private BackgroundWorker _backgroundWorker = new BackgroundWorker();
-        
+
         public ListenerService(OwnIpAddress ownIpAddress, HttpListener httpListener)
         {
             _baseUrl = $"http://{ownIpAddress.IpAddress}:{OwnIpAddress.Port}/";
             _listener = httpListener;
             _listener.Prefixes.Add(_baseUrl);
         }
-        
+
         public void Start()
         {
             _backgroundWorker.WorkerSupportsCancellation = true;
@@ -48,18 +48,35 @@ namespace zClip_Desktop.Services
             var request = context.Request;
             var method = request.HttpMethod;
             var url = request.RawUrl;
-            
-            if (method == HttpMethod.Get.Method && url == "/")
+
+            try
             {
-                TestConnectionFromTarget(context);
+                if (method == HttpMethod.Get.Method && url == "/")
+                {
+                    TestConnectionFromTarget(context);
+                }
+                else if (method == HttpMethod.Post.Method && url == "/")
+                {
+                    ReceiveClipboardContent(context);
+                }
+                else
+                {
+                    NotFoundResponse(context);
+                }
             }
-            else if (method == HttpMethod.Post.Method && url == "/")
+            catch (Exception e)
             {
-                ReceiveClipboardContent(context);
-            }
-            else
-            {
-                NotFoundResponse(context);
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                var response = context.Response;
+                
+                string responseString = e.Message;
+                byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+
+                response.ContentLength64 = buffer.Length;
+                Stream output = response.OutputStream;
+                output.Write(buffer, 0, buffer.Length);
+                
+                context.Response.Close();
             }
         }
 
@@ -79,9 +96,8 @@ namespace zClip_Desktop.Services
             StreamReader reader = new StreamReader(inputStream, request.ContentEncoding);
             string requestBody = reader.ReadToEnd();
 
-            // TODO: Try Catch against not-json-texts
             var clipboardText = JsonSerializer.Deserialize<ListenerEventArgs>(requestBody);
-            
+
             // Close the StreamReader and the InputStream
             reader.Close();
             inputStream.Close();
@@ -103,7 +119,7 @@ namespace zClip_Desktop.Services
 
             // Get a response stream and write the response to it.
             response.ContentLength64 = buffer.Length;
-            System.IO.Stream output = response.OutputStream;
+            Stream output = response.OutputStream;
             output.Write(buffer, 0, buffer.Length);
 
             // You must close the output stream.
