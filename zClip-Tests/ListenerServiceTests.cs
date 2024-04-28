@@ -50,5 +50,17 @@ namespace zClip_Tests
             
             response.StatusCode.Should().Be(HttpStatusCode.Accepted);
         }
+
+        [Fact]
+        public async void ListenerService_Should_Return_404()
+        {
+            var client = new HttpClient();
+            
+            _listenerService.Start();
+            var response = await client.GetAsync($"http://{_ownIpAddress.IpAddress}:{OwnIpAddress.Port}/a");
+            _listenerService.Stop();
+
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
     }
 }
