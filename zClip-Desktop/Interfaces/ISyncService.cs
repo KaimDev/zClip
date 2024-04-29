@@ -6,7 +6,7 @@ namespace zClip_Desktop.Interfaces
     public interface ISyncService
     {
         event EventHandler<SyncEventArgs> OnSyncMessage;
-        void Start();
-        void Stop();
+        void SyncDevice();
+        void Disconnect();
     }
 }
