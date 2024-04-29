@@ -12,14 +12,17 @@ namespace zClip_Tests
 {
     public class ListenerServiceTests
     {
-        private ListenerService _listenerService;
-        private OwnIpAddress _ownIpAddress;
+        private readonly ListenerService _listenerService;
+        private readonly OwnIpAddress _ownIpAddress;
+        private readonly string ipAddress;
 
         public ListenerServiceTests()
         {
             var serviceCollections = ServiceCollections.GetInstance();
             _listenerService = serviceCollections.GetContainer().Resolve<ListenerService>();
             _ownIpAddress = serviceCollections.GetContainer().Resolve<OwnIpAddress>();
+
+            ipAddress = $"http://{_ownIpAddress.IpAddress}:{OwnIpAddress.Port}/";
         }
 
         [Fact]
@@ -28,7 +31,7 @@ namespace zClip_Tests
             var client = new HttpClient();
 
             _listenerService.Start();
-            var response = await client.GetAsync($"http://{_ownIpAddress.IpAddress}:{OwnIpAddress.Port}/");
+            var response = await client.GetAsync(ipAddress);
             _listenerService.Stop();
             
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -45,7 +48,7 @@ namespace zClip_Tests
                 JsonSerializer.Serialize(new { ClipboardText = text}), Encoding.UTF8, "application/json");
             
             _listenerService.Start();
-            var response = await client.PostAsync($"http://{_ownIpAddress.IpAddress}:{OwnIpAddress.Port}/", stringContent);
+            var response = await client.PostAsync(ipAddress, stringContent);
             _listenerService.Stop();
             
             response.StatusCode.Should().Be(HttpStatusCode.Accepted);
@@ -57,10 +60,25 @@ namespace zClip_Tests
             var client = new HttpClient();
             
             _listenerService.Start();
-            var response = await client.GetAsync($"http://{_ownIpAddress.IpAddress}:{OwnIpAddress.Port}/a");
+            var response = await client.GetAsync($"{ipAddress}/a");
             _listenerService.Stop();
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async void ListenerService_Should_Return_500()
+        {
+            var client = new HttpClient();
+
+            string content = "<h1>Hello World</h1>";
+            StringContent stringContent = new StringContent(content, Encoding.UTF8, "text/html");
+            
+            _listenerService.Start();
+            var response = await client.PostAsync(ipAddress, stringContent);
+            _listenerService.Stop();
+
+            response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
         }
     }
 }
