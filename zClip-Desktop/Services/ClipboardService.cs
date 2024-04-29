@@ -20,7 +20,7 @@ namespace zClip_Desktop.Services
         {
             _backgroundWorker = new BackgroundWorker();
             _backgroundWorker.WorkerSupportsCancellation = true;
-            _backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            _backgroundWorker.DoWork += BackgroundWorker_GetClipboard;
             _backgroundWorker.RunWorkerAsync();
         }
 
@@ -35,7 +35,7 @@ namespace zClip_Desktop.Services
             _staThreadDispatcher.Invoke(Clipboard.Clear);
         }
 
-        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void BackgroundWorker_GetClipboard(object sender, DoWorkEventArgs e)
         {
             string lastText = string.Empty;
 
@@ -77,6 +77,25 @@ namespace zClip_Desktop.Services
         {
             ClipboardEventArgs args = new ClipboardEventArgs(text);
             OnClipboardChanged?.Invoke(this, args);
+        }
+
+        public void SetClipboard(string text)
+        {
+            _backgroundWorker = new BackgroundWorker();
+            _backgroundWorker.WorkerSupportsCancellation = true;
+            _backgroundWorker.DoWork += BackgroundWorker_SetClipboard;
+            _backgroundWorker.RunWorkerAsync(text);
+        }
+
+        private void BackgroundWorker_SetClipboard(object sender, DoWorkEventArgs e)
+        {
+            var staThread = new Thread(() =>
+            {
+                var text = (string)e.Argument;
+                Clipboard.SetText(text);
+            });
+            staThread.SetApartmentState(ApartmentState.STA);
+            staThread.Start();
         }
     }
 }

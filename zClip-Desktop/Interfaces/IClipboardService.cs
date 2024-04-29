@@ -9,5 +9,6 @@ namespace zClip_Desktop.Interfaces
         void Start();
         void Stop();
         void Clear();
+        void SetClipboard(string text);
     }
 }
