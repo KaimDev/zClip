@@ -1,4 +1,6 @@
-﻿using Unity;
+﻿using System.Windows;
+using Unity;
+using zClip_Desktop.Extensions;
 using zClip_Desktop.Helpers;
 using zClip_Desktop.Services;
 
@@ -24,9 +26,23 @@ namespace zClip_Desktop
         {
             _serviceCollections = ServiceCollections.GetInstance();
             var ownIpAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>();
-            
+
             _ipAddress = ownIpAddress.IpAddress;
             TB_IpName.Text = _ipAddress;
+        }
+
+        private void RequestConnection_OnClick(object sender, RoutedEventArgs e)
+        {
+            var targetIpAddress = TbTargetIp.Text;
+            
+            // TODO: ADD VALIDATION FOR A IP ADDRESS
+            if (targetIpAddress.Trim().Length == 0)
+            {
+                MessageBox.Show("Target ip address is required", "Alert", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+            
+            _serviceCollections.GetContainer().RegisterTargetIp(targetIpAddress);
         }
     }
 }

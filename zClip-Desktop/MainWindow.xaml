@@ -18,9 +18,9 @@
         <TextBlock Text="Disconnected" Foreground="Red" FontWeight="Bold" TextAlignment="Center" FontSize="20" Margin="20"/>
         
         <TextBlock Text="Device IP to Sync" TextAlignment="Center" />
-        <TextBox Background="Gray" Width="200px" Margin="10" Height="30px" FontSize="16" VerticalAlignment="Center" TextAlignment="Center" />
+        <TextBox x:Name="TbTargetIp" Background="Gray" Width="200px" Margin="10" Height="30px" FontSize="16" VerticalAlignment="Center" TextAlignment="Center" />
         
-        <Button Width="100px">
+        <Button Width="100px" Click="RequestConnection_OnClick">
             <Button.Content>
                 <TextBlock>Request Sync</TextBlock>
             </Button.Content>
