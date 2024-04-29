@@ -38,12 +38,12 @@ namespace zClip_Desktop.Services
 
             try
             {
-                var response =  _httpClient.PostAsync(_targetIpAddress, jsonContent, cancellationToken);
-                
+                var response = _httpClient.PostAsync(_targetIpAddress, jsonContent, cancellationToken);
+
                 cancellationToken.ThrowIfCancellationRequested();
 
                 await response;
-                
+
                 ClientServiceChanged(response.Result);
             }
             catch (Exception e)
@@ -52,12 +52,17 @@ namespace zClip_Desktop.Services
             }
         }
 
-        // TODO: Make a Test
         public async Task TestConnectionToTarget()
         {
-            var response = await _httpClient.GetAsync(_targetIpAddress);
-
-            ClientServiceChanged(response);
+            try
+            {
+                var response = await _httpClient.GetAsync(_targetIpAddress);
+                ClientServiceChanged(response);
+            }
+            catch (Exception e)
+            {
+                ClientServiceChanged(e);
+            }
         }
 
         private void ClientServiceChanged(dynamic content)
@@ -114,7 +119,7 @@ namespace zClip_Desktop.Services
             ClientEventArgs clientEventArgs = new ClientEventArgs();
             clientEventArgs.Message = exception.Message;
             clientEventArgs.StatusCode = (int)HttpStatusCode.InternalServerError;
-            
+
             OnClientChange?.Invoke(this, clientEventArgs);
         }
     }
