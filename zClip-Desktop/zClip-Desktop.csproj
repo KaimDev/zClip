@@ -108,6 +108,7 @@
         <Compile Include="Services\ServiceCollections.cs" />
         <Compile Include="Services\SyncService.cs" />
         <Compile Include="Types\SecurityType.cs" />
+        <Compile Include="ZClipSettings.cs" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>

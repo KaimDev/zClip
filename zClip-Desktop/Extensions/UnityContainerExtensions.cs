@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Unity;
 using zClip_Desktop.Helpers;
 using System.Linq;
@@ -13,19 +14,29 @@ namespace zClip_Desktop.Extensions
     {
         public static void ConfigureOwnIp(this IUnityContainer container)
         {
-            var IPHost = Dns.GetHostEntry(Dns.GetHostName());
+            try
+            {
+                var iPHost = Dns.GetHostEntry(Dns.GetHostName());
+                string ipAddress = (from ip in iPHost.AddressList
+                    where ip.ToString().StartsWith("192.168")
+                    select ip).First().ToString();
 
-            string IpAddress = (from ipAddress in IPHost.AddressList
-                where ipAddress.ToString().StartsWith("192.168")
-                select ipAddress).First().ToString();
-
-            container.RegisterType<OwnIpAddress>(new InjectionConstructor(IpAddress));
+                container.RegisterType<OwnIpAddress>(new InjectionConstructor(ipAddress));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                ZClipSettings.IsEthernet = false;
+            }
         }
-        
+
         public static void ConfigureListenerService(this IUnityContainer container)
         {
+            if (!ZClipSettings.IsEthernet) return;
+            
             var ownIpAddress = container.Resolve(typeof(OwnIpAddress));
-            container.RegisterSingleton<IListenerService, ListenerService>(new InjectionConstructor(ownIpAddress, typeof(HttpListener)));
+            container.RegisterSingleton<IListenerService, ListenerService>(
+                new InjectionConstructor(ownIpAddress, typeof(HttpListener)));
         }
 
         public static void ConfigureClipboardService(this IUnityContainer container)
@@ -46,7 +57,8 @@ namespace zClip_Desktop.Extensions
         public static void RegisterClientType(this IUnityContainer container)
         {
             var targetIp = container.Resolve<TargetIpAddress>();
-            container.RegisterType<IClientService, ClientService>(new InjectionConstructor(targetIp, typeof(HttpClient)));
+            container.RegisterType<IClientService, ClientService>(
+                new InjectionConstructor(targetIp, typeof(HttpClient)));
         }
 
         public static void ConfigureSyncService(this IUnityContainer container)

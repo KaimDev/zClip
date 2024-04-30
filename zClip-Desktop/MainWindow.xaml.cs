@@ -11,7 +11,6 @@ namespace zClip_Desktop
     /// </summary>
     public partial class MainWindow
     {
-        private ListenerService _listenerService;
         private ServiceCollections _serviceCollections;
 
         private string _ipAddress;
@@ -25,23 +24,32 @@ namespace zClip_Desktop
         private void ConfigureComponents()
         {
             _serviceCollections = ServiceCollections.GetInstance();
-            var ownIpAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>();
+            
+            if (ZClipSettings.IsEthernet)
+            {
+                var ownIpAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>();
 
-            _ipAddress = ownIpAddress.IpAddress;
-            TB_IpName.Text = _ipAddress;
+                _ipAddress = ownIpAddress.IpAddress;
+                TbIpName.Text = _ipAddress;
+            }
+            else
+            {
+                TbIpName.Text = "LAN NETWORK IS NOT DETECTED";
+                TbIpName.TextDecorations = TextDecorations.Underline;
+            }
         }
 
         private void RequestConnection_OnClick(object sender, RoutedEventArgs e)
         {
             var targetIpAddress = TbTargetIp.Text;
-            
+
             // TODO: ADD VALIDATION FOR A IP ADDRESS
             if (targetIpAddress.Trim().Length == 0)
             {
                 MessageBox.Show("Target ip address is required", "Alert", MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
-            
+
             _serviceCollections.GetContainer().RegisterTargetIp(targetIpAddress);
         }
     }
