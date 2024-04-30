@@ -24,17 +24,12 @@ namespace zClip_Desktop
         private void ConfigureComponents()
         {
             _serviceCollections = ServiceCollections.GetInstance();
-            
-            if (ZClipSettings.IsEthernet)
-            {
-                var ownIpAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>();
+            var ownIpAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>();
+            _ipAddress = ownIpAddress.IpAddress;
+            TbIpName.Text = _ipAddress;
 
-                _ipAddress = ownIpAddress.IpAddress;
-                TbIpName.Text = _ipAddress;
-            }
-            else
+            if (!ZClipSettings.IsEthernet)
             {
-                TbIpName.Text = "LAN NETWORK IS NOT DETECTED";
                 TbIpName.TextDecorations = TextDecorations.Underline;
             }
         }

@@ -27,6 +27,8 @@ namespace zClip_Desktop.Extensions
             {
                 Console.WriteLine(e.Message);
                 ZClipSettings.IsEthernet = false;
+                string ipAddress = "LAN NETWORK IS NOT DETECTED";
+                container.RegisterType<OwnIpAddress>(new InjectionConstructor(ipAddress));
             }
         }
 
