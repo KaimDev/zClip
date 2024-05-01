@@ -24,6 +24,10 @@ namespace zClip_Desktop
 
         private void ConfigureComponents()
         {
+            // Configure Sync Button Handler
+            BSync.Text = ButtonState.RequestSync;
+            
+            // Get the Own ip address and display it
             _serviceCollections = ServiceCollections.GetInstance();
             var ownIpAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>();
             _ipAddress = ownIpAddress.IpAddress;
@@ -37,6 +41,14 @@ namespace zClip_Desktop
 
         private void RequestConnection_OnClick(object sender, RoutedEventArgs e)
         {
+            if (BSync.Text == ButtonState.CancelSync)
+            {
+                BSync.Text = ButtonState.RequestSync;
+                TbTargetIp.IsEnabled = true;
+                _serviceCollections.DestroyInstance();
+                return;
+            }
+            
             var targetIpAddress = TbTargetIp.Text;
             
             if (targetIpAddress.Trim().Length == 0)
@@ -48,15 +60,18 @@ namespace zClip_Desktop
 
             string lanIpPattern = @"^(192\.168\.\d{1,3}\.\d{1,3})$";
 
-            var regexResonse = Regex.Match(targetIpAddress, lanIpPattern);
+            var regexResponse = Regex.Match(targetIpAddress, lanIpPattern);
 
-            if (!regexResonse.Success)
+            if (!regexResponse.Success)
             {
                 MessageBox.Show("Target ip address is incorrect", "Alert", MessageBoxButton.OK,
                     MessageBoxImage.Information);
                 return;
             }
             
+            BSync.Text = ButtonState.CancelSync;
+            TbTargetIp.IsEnabled = false;
+
             CompleteServiceCollection(targetIpAddress);
         }
 

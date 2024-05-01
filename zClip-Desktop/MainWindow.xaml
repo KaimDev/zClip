@@ -22,7 +22,7 @@
         
         <Button Width="100px" Click="RequestConnection_OnClick">
             <Button.Content>
-                <TextBlock>Request Sync</TextBlock>
+                <TextBlock x:Name="BSync"/>
             </Button.Content>
         </Button>
     </StackPanel>

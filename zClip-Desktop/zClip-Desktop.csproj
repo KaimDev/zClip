@@ -94,6 +94,7 @@
         <Compile Include="CustomEventArgs\SecurityEventArgs.cs" />
         <Compile Include="CustomEventArgs\SyncEventArgs.cs" />
         <Compile Include="Extensions\UnityContainerExtensions.cs" />
+        <Compile Include="Helpers\ButtonState.cs" />
         <Compile Include="Helpers\OwnIpAddress.cs" />
         <Compile Include="Helpers\TargetIpAddress.cs" />
         <Compile Include="Interfaces\IClientService.cs" />
