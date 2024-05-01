@@ -3,6 +3,7 @@ using System.Windows;
 using Unity;
 using zClip_Desktop.Extensions;
 using zClip_Desktop.Helpers;
+using zClip_Desktop.Interfaces;
 using zClip_Desktop.Services;
 
 namespace zClip_Desktop
@@ -45,6 +46,7 @@ namespace zClip_Desktop
             {
                 BSync.Text = ButtonState.RequestSync;
                 TbTargetIp.IsEnabled = true;
+                _serviceCollections.GetContainer().Resolve<ISyncService>().Disconnect();
                 _serviceCollections.DestroyInstance();
                 return;
             }
@@ -73,6 +75,7 @@ namespace zClip_Desktop
             TbTargetIp.IsEnabled = false;
 
             CompleteServiceCollection(targetIpAddress);
+            InitializeSync();
         }
 
         private void CompleteServiceCollection(string targetIpAddress)
@@ -80,6 +83,11 @@ namespace zClip_Desktop
             _serviceCollections.GetContainer().RegisterTargetIp(targetIpAddress);
             _serviceCollections.GetContainer().RegisterClientType();
             _serviceCollections.GetContainer().RegisterSyncService();
+        }
+
+        private void InitializeSync()
+        {
+            _serviceCollections.GetContainer().Resolve<ISyncService>().SyncDevice();
         }
     }
 }
