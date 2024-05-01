@@ -36,7 +36,7 @@ namespace zClip_Desktop
             _ipAddress = ownIpAddress.IpAddress;
             TbIpName.Text = _ipAddress;
 
-            if (!ZClipSettings.IsEthernet)
+            if (!ZClipSettings.HasInternet)
             {
                 TbIpName.TextDecorations = TextDecorations.Underline;
             }
@@ -85,7 +85,7 @@ namespace zClip_Desktop
                 TbTargetIp.Text = string.Empty;
                 TbTargetIp.IsEnabled = true;
             });
-            
+                
             _serviceCollections.GetContainer().Resolve<ISyncService>().Disconnect();
             _serviceCollections.DestroyInstance();
         }

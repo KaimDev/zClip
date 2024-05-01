@@ -26,7 +26,7 @@ namespace zClip_Desktop.Extensions
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                ZClipSettings.IsEthernet = false;
+                ZClipSettings.HasInternet = false;
                 string ipAddress = "LAN NETWORK IS NOT DETECTED";
                 container.RegisterType<OwnIpAddress>(new InjectionConstructor(ipAddress));
             }
@@ -34,7 +34,7 @@ namespace zClip_Desktop.Extensions
 
         public static void RegisterListenerService(this IUnityContainer container)
         {
-            if (!ZClipSettings.IsEthernet) return;
+            if (!ZClipSettings.HasInternet) return;
             
             var ownIpAddress = container.Resolve(typeof(OwnIpAddress));
             container.RegisterSingleton<IListenerService, ListenerService>(

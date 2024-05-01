@@ -2,6 +2,6 @@
 {
     public static class ZClipSettings
     {
-        public static bool IsEthernet = true;
+        public static bool HasInternet = true;
     }
 }
