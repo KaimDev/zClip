@@ -6,7 +6,7 @@ namespace zClip_Desktop.Services
     public class ServiceCollections
     {
         private static ServiceCollections _instance = null;
-        private readonly IUnityContainer _container;
+        private IUnityContainer _container;
         
         private ServiceCollections()
         {
@@ -29,6 +29,11 @@ namespace zClip_Desktop.Services
             _container.RegisterListenerService();
             _container.RegisterClipboardService();
             _container.RegisterSecurityService();
+        }
+
+        public void DestroyServices()
+        {
+            _container = null;
         }
         
         public IUnityContainer GetContainer()
