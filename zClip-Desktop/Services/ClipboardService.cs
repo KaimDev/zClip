@@ -26,7 +26,15 @@ namespace zClip_Desktop.Services
 
         public void Stop()
         {
-            _backgroundWorker.CancelAsync();
+            try
+            {
+                _backgroundWorker.CancelAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                OnClipboardChanged?.Invoke(this, new ClipboardEventArgs(e.Message));
+            }
         }
 
         public void Clear()

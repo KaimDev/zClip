@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows;
 using Unity;
+using zClip_Desktop.CustomEventArgs;
 using zClip_Desktop.Extensions;
 using zClip_Desktop.Helpers;
 using zClip_Desktop.Interfaces;
@@ -14,8 +15,9 @@ namespace zClip_Desktop
     public partial class MainWindow
     {
         private ServiceCollections _serviceCollections;
-
         private string _ipAddress;
+
+        private void OnSyncChanged(object sender, SyncEventArgs eventArgs) => HandleSyncChanges(eventArgs);
 
         public MainWindow()
         {
@@ -27,7 +29,7 @@ namespace zClip_Desktop
         {
             // Configure Sync Button Handler
             BSync.Text = ButtonState.RequestSync;
-            
+
             // Get the Own ip address and display it
             _serviceCollections = ServiceCollections.GetInstance();
             var ownIpAddress = _serviceCollections.GetContainer().Resolve<OwnIpAddress>();
@@ -44,15 +46,12 @@ namespace zClip_Desktop
         {
             if (BSync.Text == ButtonState.CancelSync)
             {
-                BSync.Text = ButtonState.RequestSync;
-                TbTargetIp.IsEnabled = true;
-                _serviceCollections.GetContainer().Resolve<ISyncService>().Disconnect();
-                _serviceCollections.DestroyInstance();
+                CancelSync();
                 return;
             }
-            
+
             var targetIpAddress = TbTargetIp.Text;
-            
+
             if (targetIpAddress.Trim().Length == 0)
             {
                 MessageBox.Show("Target ip address is required", "Alert", MessageBoxButton.OK,
@@ -70,12 +69,25 @@ namespace zClip_Desktop
                     MessageBoxImage.Information);
                 return;
             }
-            
+
             BSync.Text = ButtonState.CancelSync;
             TbTargetIp.IsEnabled = false;
 
             CompleteServiceCollection(targetIpAddress);
             InitializeSync();
+        }
+
+        private void CancelSync()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                BSync.Text = ButtonState.RequestSync;
+                TbTargetIp.Text = string.Empty;
+                TbTargetIp.IsEnabled = true;
+            });
+            
+            _serviceCollections.GetContainer().Resolve<ISyncService>().Disconnect();
+            _serviceCollections.DestroyInstance();
         }
 
         private void CompleteServiceCollection(string targetIpAddress)
@@ -87,7 +99,18 @@ namespace zClip_Desktop
 
         private void InitializeSync()
         {
-            _serviceCollections.GetContainer().Resolve<ISyncService>().SyncDevice();
+            var syncService = _serviceCollections.GetContainer().Resolve<ISyncService>();
+            syncService.SyncDevice();
+            syncService.OnSyncMessage += OnSyncChanged;
+        }
+
+        private void HandleSyncChanges(SyncEventArgs eventArgs)
+        {
+            MessageBox.Show(eventArgs.Message, "Message", MessageBoxButton.OK,
+                MessageBoxImage.Information);
+
+            if (eventArgs.IsError)
+                CancelSync();
         }
     }
 }

@@ -68,7 +68,7 @@ namespace zClip_Desktop.Services
         {
             SyncEventArgs syncEventArgs = new SyncEventArgs();
 
-            CancellationTokenSource cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource();
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = cancellationTokenSource.Token;
 
             switch (eventArgs.StatusCode)
@@ -89,7 +89,7 @@ namespace zClip_Desktop.Services
 
         private async void OnClipboardChanged(object sender, ClipboardEventArgs eventArgs)
         {
-            CancellationTokenSource cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource();
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(10));
             _cancellationToken = cancellationTokenSource.Token;
             
