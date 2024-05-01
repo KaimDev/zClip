@@ -12,7 +12,7 @@ namespace zClip_Desktop.Extensions
 {
     public static class UnityContainerExtensions
     {
-        public static void ConfigureOwnIp(this IUnityContainer container)
+        public static void RegisterOwnIp(this IUnityContainer container)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace zClip_Desktop.Extensions
             }
         }
 
-        public static void ConfigureListenerService(this IUnityContainer container)
+        public static void RegisterListenerService(this IUnityContainer container)
         {
             if (!ZClipSettings.IsEthernet) return;
             
@@ -41,7 +41,7 @@ namespace zClip_Desktop.Extensions
                 new InjectionConstructor(ownIpAddress, typeof(HttpListener)));
         }
 
-        public static void ConfigureClipboardService(this IUnityContainer container)
+        public static void RegisterClipboardService(this IUnityContainer container)
         {
             container.RegisterSingleton(typeof(IClipboardService), typeof(ClipboardService));
         }
@@ -63,7 +63,12 @@ namespace zClip_Desktop.Extensions
                 new InjectionConstructor(targetIp, typeof(HttpClient)));
         }
 
-        public static void ConfigureSyncService(this IUnityContainer container)
+        public static void RegisterSecurityService(this IUnityContainer container)
+        {
+            container.RegisterType<ISecurityService, SecurityService>();
+        }
+
+        public static void RegisterSyncService(this IUnityContainer container)
         {
             var client = container.Resolve(typeof(IClientService));
             var clipboard = container.Resolve(typeof(IClipboardService));

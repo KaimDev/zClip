@@ -45,7 +45,14 @@ namespace zClip_Desktop
                     MessageBoxImage.Information);
             }
 
+            CompleteServiceCollection(targetIpAddress);
+        }
+
+        private void CompleteServiceCollection(string targetIpAddress)
+        {
             _serviceCollections.GetContainer().RegisterTargetIp(targetIpAddress);
+            _serviceCollections.GetContainer().RegisterClientType();
+            _serviceCollections.GetContainer().RegisterSyncService();
         }
     }
 }
