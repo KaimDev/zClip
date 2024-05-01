@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Text.RegularExpressions;
+using System.Windows;
 using Unity;
 using zClip_Desktop.Extensions;
 using zClip_Desktop.Helpers;
@@ -37,14 +38,25 @@ namespace zClip_Desktop
         private void RequestConnection_OnClick(object sender, RoutedEventArgs e)
         {
             var targetIpAddress = TbTargetIp.Text;
-
-            // TODO: ADD VALIDATION FOR A IP ADDRESS
+            
             if (targetIpAddress.Trim().Length == 0)
             {
                 MessageBox.Show("Target ip address is required", "Alert", MessageBoxButton.OK,
                     MessageBoxImage.Information);
+                return;
             }
 
+            string lanIpPattern = @"^(192\.168\.\d{1,3}\.\d{1,3})$";
+
+            var regexResonse = Regex.Match(targetIpAddress, lanIpPattern);
+
+            if (!regexResonse.Success)
+            {
+                MessageBox.Show("Target ip address is incorrect", "Alert", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                return;
+            }
+            
             CompleteServiceCollection(targetIpAddress);
         }
 

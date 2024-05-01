@@ -77,8 +77,8 @@ namespace zClip_Desktop.Extensions
 
             container.RegisterSingleton<ISyncService, SyncService>(new InjectionConstructor(
                 client,
-                clipboard,
                 listener,
+                clipboard,
                 security
             ));
         }
